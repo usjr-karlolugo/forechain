@@ -268,5 +268,5 @@ def process_user_provided_news():
 
 # Run
 if __name__ == "__main__":
-    # process_real_time_news()
+    process_real_time_news()
     process_user_provided_news()
