@@ -1,0 +1,84 @@
+<header class="header">
+  <div class="header-logo">
+    <img src="assets/logo.png" alt="Logo" class="logo" />
+  </div>
+  <div class="header-actions">
+    <div class="search-container">
+      <div class="search-bar">
+        <input type="text" placeholder="Search..." aria-label="Search" />
+      </div>
+      <div class="icons">
+        <button class="icon-btn" aria-label="Change Language">
+          <!-- Globe Icon -->
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-6 w-6"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M12 2a10 10 0 100 20 10 10 0 000-20zM2 12h20M12 2c2.21 0 4 4.03 4 9s-1.79 9-4 9-4-4.03-4-9 1.79-9 4-9z"
+            />
+          </svg>
+        </button>
+        <button class="icon-btn" aria-label="Profile">
+          <!-- Profile Icon -->
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-6 w-6"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M5.121 17.804A9.956 9.956 0 0112 15c2.21 0 4.21.722 5.879 1.804M15 11a3 3 0 11-6 0 3 3 0 016 0z"
+            />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="dashboard">
+  <div *ngIf="alerts.length; else noAlerts">
+    <ul class="alert-list">
+      <li *ngFor="let alert of alerts" class="alert-item">
+        <div class="alert-card">
+          <h3>{{ alert.title }}</h3>
+          <p><strong>Topic:</strong> {{ alert.topic }}</p>
+          <p>
+            <strong>Sentiment:</strong> {{ alert.sentiment }} ({{
+              alert.sentiment_score | number : "1.2-2"
+            }})
+          </p>
+          <p>
+            <strong>Entities:</strong>
+            <span *ngFor="let key of objectKeys(alert.entities)">
+              {{ key }},
+            </span>
+          </p>
+          <p>
+            <button class="view-article-btn" (click)="openLink(alert.url)">
+              View Article
+            </button>
+          </p>
+          <p>
+            <em>{{ alert.created_at | date : "short" }}</em>
+          </p>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <ng-template #noAlerts>
+    <p>No alerts available.</p>
+  </ng-template>
+</div>

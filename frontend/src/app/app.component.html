@@ -1,0 +1,9 @@
+<div class="container" role="main">
+  <h1>Supply Chain Risk Dashboard</h1>
+  <section class="alert-box" aria-labelledby="alert-title" *ngIf="alert">
+    <p id="alert-title" class="alert-title">{{ alert.title }}</p>
+    <p class="alert-text"><strong>Date:</strong> {{ alert.date }}</p>
+    <p class="alert-text"><strong>Event:</strong> {{ alert.event }}</p>
+    <p class="alert-text"><strong>Impact:</strong> {{ alert.impact }}</p>
+  </section>
+</div>
