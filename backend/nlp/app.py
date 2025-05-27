@@ -1,12 +1,13 @@
 from flask import Flask, request, jsonify
-from nlp.pipeline import fetch_news_article, analyze_text  # Import from pipeline.py
+from nlp.scraper import fetch_news_article, analyze_text  # Import from pipeline.py
 
 app = Flask(__name__)
 
-@app.route('/scrape', methods=['POST'])
+
+@app.route("/scrape", methods=["POST"])
 def scrape():
     data = request.json
-    url = data.get('url')
+    url = data.get("url")
     if not url:
         return jsonify({"error": "URL is required"}), 400
 
@@ -16,6 +17,7 @@ def scrape():
 
     analysis = analyze_text(text[:500])  # Limit text length
     return jsonify({"title": title, "analysis": analysis})
+
 
 if __name__ == "__main__":
     app.run(debug=True)

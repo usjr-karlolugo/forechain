@@ -1,0 +1,17 @@
+Django>=5.2
+djangorestframework
+python-dotenv
+requests
+newspaper3k
+transformers
+torch
+lxml
+lxml_html_clean
+Flask
+fastapi
+uvicorn
+tf-keras
+python-dotenv
+newspaper3k
+flask
+aiohttp
