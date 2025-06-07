@@ -1,0 +1,44 @@
+<header class="bg-orange-600 text-white p-4 shadow-md">
+  <div class="container mx-auto flex justify-between items-center pl-10 pr-10">
+    <h1 class="text-2xl font-bold">FORECHAIN</h1>
+
+    <nav>
+      <ul class="flex space-x-4">
+        <li>
+          <a
+            href="#"
+            id="navArticles"
+            (click)="onNavigate('articles', $event)"
+            [ngClass]="{
+              'underline': activeRoute === 'articles',
+              'hover:text-orange-200': true,
+              'text-white': true,
+              'font-medium': true,
+              'transition': true,
+              'duration-200': true
+            }"
+          >
+            Articles
+          </a>
+        </li>
+        <li>
+          <a
+            href="#"
+            id="navStatistics"
+            (click)="onNavigate('statistics', $event)"
+            [ngClass]="{
+              'underline': activeRoute === 'statistics',
+              'hover:text-orange-200': true,
+              'text-white': true,
+              'font-medium': true,
+              'transition': true,
+              'duration-200': true
+            }"
+          >
+            Statistics
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</header>

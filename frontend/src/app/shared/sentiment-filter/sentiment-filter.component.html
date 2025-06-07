@@ -1,0 +1,14 @@
+<div class="mb-4 flex items-center space-x-2 pl-10 pt-6">
+  <label for="sentimentFilter" class="text-gray-700 font-medium">Filter by Sentiment:</label>
+  <select
+    id="sentimentFilter"
+    class="p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500 transition duration-200"
+    [value]="selectedSentiment"
+    (change)="onSentimentChange($event)"
+  >
+    <option value="all">All</option>
+    <option value="positive">Positive</option>
+    <option value="neutral">Neutral</option>
+    <option value="Negative">Negative</option>
+  </select>
+</div>

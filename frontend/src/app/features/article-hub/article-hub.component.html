@@ -1,0 +1,16 @@
+<app-sentiment-filter (sentimentChange)="filterAccess($event)"></app-sentiment-filter>
+<div class="flex pl-10 pr-10">  
+    <div class="w-2/3 grid grid-cols-1 md:grid-cols-1 gap-4 mr-10">
+      <app-article-card
+        *ngFor="let article of filteredArticles"
+        [article]="article"
+        (viewArticle)="onViewArticle($event)"
+        (predictInsights)="onPredictInsights($event)"
+      ></app-article-card>
+  </div>
+  <app-predicted-insights
+    [loading]="loading"
+    [error]="hasError"
+    [insightText]="predictionResult">
+  </app-predicted-insights>
+</div>

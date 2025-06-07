@@ -9,6 +9,8 @@ class Alert(models.Model):
     topic = models.CharField(max_length=100)
     score = models.JSONField()  # To store the array of scores
     entities = models.JSONField()  # To store locations and companies as JSON
-
+    summary = models.TextField()
+    image_url = models.URLField()
+    
     def __str__(self):
         return self.title
