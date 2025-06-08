@@ -14,25 +14,8 @@ class Alert(models.Model):
     topic = models.CharField(max_length=255, null=True, blank=True)
     score = models.FloatField(default=0)
     created_at = models.DateTimeField(default=timezone.now)
+    summary = models.TextField()
+    image_url = models.URLField()
 
     def __str__(self):
         return self.title
-
-
-# serializers.py
-class AlertSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Alert
-        fields = "__all__"
-
-
-# views.py
-class AlertCreateView(generics.ListCreateAPIView):
-    queryset = Alert.objects.all()
-    serializer_class = AlertSerializer
-
-
-# urls.py
-urlpatterns = [
-    path("api/alerts/", AlertCreateView.as_view(), name="alert-list-create"),
-]

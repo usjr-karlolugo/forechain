@@ -1,0 +1,38 @@
+<div class="article-card bg-white rounded-lg shadow-md p-4 mb-4 border border-gray-200 hover:shadow-lg transition duration-200 flex items-start">
+  <div class="flex-shrink-0 mr-4">
+    <img
+      [src]="article.image_url"
+      [alt]="article.title"
+      class="w-24 h-24 object-cover rounded-md border border-gray-200"
+    />
+  </div>
+  <div class="flex-1">
+    <h3 class="text-xl font-semibold text-gray-900 mb-2 line-clamp-2">{{ article.title }}</h3>
+    <p class="text-gray-700 text-sm mb-2">{{ article.summary }}</p>
+    <div class="flex flex-wrap text-xs text-gray-600 mb-3">
+      <span class="mr-3">
+        <strong class="font-medium">Topic:</strong> {{ article.topic }}
+      </span>
+      <span>
+        <strong class="font-medium">Sentiment:</strong>
+        <span [ngClass]="getSentimentClass(article.sentiment)">
+          {{ article.sentiment }}
+        </span>
+      </span>
+    </div>
+    <div class="flex space-x-2">
+      <button
+        (click)="onView()"
+        class="bg-gray-200 hover:bg-gray-300 text-gray-800 text-sm font-medium py-2 px-4 rounded-md transition duration-200"
+      >
+        View Article
+      </button>
+      <button
+        (click)="onPredict()"
+        class="bg-orange-500 hover:bg-orange-600 text-white text-sm font-medium py-2 px-4 rounded-md transition duration-200"
+      >
+        Predict Insights
+      </button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,48 @@
+<header class="bg-white text-white py-6">
+  <div class="container mx-auto flex justify-between items-center pl-10 pr-10">
+    
+    <!-- Logo Image -->
+    <div class="flex items-center">
+      <img src="../../assets/logo.png" alt="FORECHAIN Logo" class="h-12 w-auto" />
+    </div>
+
+    <nav>
+      <ul class="flex space-x-6">
+        <li>
+          <a
+            href="#"
+            id="navArticles"
+            (click)="onNavigate('articles', $event)"
+            [ngClass]="{
+              'underline': activeRoute === 'articles',
+              'hover:text-orange-200': true,
+              'text-orange-500': true,
+              'font-medium': true,
+              'transition': true,
+              'duration-200': true
+            }"
+          >
+            Articles
+          </a>
+        </li>
+        <li>
+          <a
+            href="#"
+            id="navStatistics"
+            (click)="onNavigate('statistics', $event)"
+            [ngClass]="{
+              'underline': activeRoute === 'statistics',
+              'hover:text-orange-200': true,
+              'text-orange-500': true,
+              'font-medium': true,
+              'transition': true,
+              'duration-200': true
+            }"
+          >
+            Statistics
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</header>

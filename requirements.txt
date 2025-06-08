@@ -16,3 +16,9 @@ newspaper3k
 flask
 aiohttp
 beautifulsoup4
+numpy
+scikit-learn
+spacy
+tensorflow
+python-multipart
+pydantic
