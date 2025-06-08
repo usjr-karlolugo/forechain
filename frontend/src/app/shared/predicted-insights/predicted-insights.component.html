@@ -9,14 +9,16 @@
 
       <div *ngIf="insightText">
         <p><span class="font-semibold">Insight:</span> {{ insightText.insight }}</p>
-        <p><span class="font-semibold">Impact Scale:</span> <span class="text-sm font-medium px-2 py-1 rounded-full" 
-              [ngClass]="{
-                'bg-green-100 text-green-800': insightText.impact_scale === 'Low',
-                'bg-yellow-100 text-yellow-800': insightText.impact_scale === 'Medium',
-                'bg-red-100 text-red-800': insightText.impact_scale === 'High'
-              }">
-              {{ insightText.impact_scale }}
-            </span>
+        <p>
+          <span class="font-semibold">Impact Scale:</span>
+          <span class="text-sm font-medium px-2 py-1 rounded-full" 
+                [ngClass]="{
+                  'bg-green-100 text-green-800': insightText.impact_scale === 'Low',
+                  'bg-yellow-100 text-yellow-800': insightText.impact_scale === 'Medium',
+                  'bg-red-100 text-red-800': insightText.impact_scale === 'High'
+                }">
+            {{ insightText.impact_scale }}
+          </span>
         </p>
         <p><span class="font-semibold">Reasoning:</span> {{ insightText.reasoning }}</p>
 
@@ -37,20 +39,24 @@
         </div>
       </div>
     </ng-container>
-  </div>
 
-  <div *ngIf="loading" class="mt-4 text-center text-orange-600 font-medium">
-    <svg class="animate-spin h-5 w-5 mr-2 inline-block text-orange-500" xmlns="http://www.w3.org/2000/svg" fill="none"
-      viewBox="0 0 24 24">
-      <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-      <path class="opacity-75" fill="currentColor"
-        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
-      </path>
-    </svg>
-    Generating insights...
-  </div>
+    <ng-container *ngIf="loading">
+      <div class="text-center text-orange-600 font-medium">
+        <svg class="animate-spin h-5 w-5 mr-2 inline-block text-orange-500" xmlns="http://www.w3.org/2000/svg" fill="none"
+          viewBox="0 0 24 24">
+          <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+          <path class="opacity-75" fill="currentColor"
+            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
+          </path>
+        </svg>
+        Generating insights...
+      </div>
+    </ng-container>
 
-  <div *ngIf="error" class="mt-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded-md">
-    An error occurred. Please try again.
+    <ng-container *ngIf="error">
+      <div class="p-3 bg-red-100 border border-red-400 text-red-700 rounded-md text-center">
+        An error occurred. Please try again.
+      </div>
+    </ng-container>
   </div>
 </div>

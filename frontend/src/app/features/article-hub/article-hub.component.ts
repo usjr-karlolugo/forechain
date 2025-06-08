@@ -74,10 +74,10 @@ export class ArticleHubComponent {
     switch (sentiment.toLowerCase()) {
       case 'positive':
         return 'text-green-600 font-semibold';
-      case 'neutral':
-        return 'text-gray-500 font-medium';
-      default:
+      case 'negative':
         return 'text-red-500 font-semibold';
+      default: 
+        return 'text-gray-500 font-medium';
     }
   }
 }
