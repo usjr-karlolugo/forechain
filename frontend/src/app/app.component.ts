@@ -21,7 +21,7 @@ export class AppComponent {
     });
   }
 
-  onRouteChange(route: 'articles' | 'statistics') {
+  onRouteChange(route: 'articles' | 'statistics' | 'profile') {
     this.router.navigateByUrl(`/${route}`);
   }
 }

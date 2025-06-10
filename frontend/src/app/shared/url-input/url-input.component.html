@@ -1,0 +1,11 @@
+<div class="scrape-container">
+  <label for="urlInput" class="text-gray-700 font-medium mr-1">Enter a URL to process:</label>
+  <input
+    type="text"
+    id="urlInput"
+    class="scrape-input"
+    placeholder="Paste article URL here"
+    [(ngModel)]="url"
+  />
+  <button class="scrape-btn font-medium" (click)="onScrape()">Send</button>
+</div>

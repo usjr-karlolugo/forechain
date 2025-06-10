@@ -16,7 +16,8 @@ export class ArticleHubComponent {
   hasError = false;
   predictionResult: InsightResponse | null = null;
   errorMessage: string | null = null;
-
+  scrapeUrl: string = '';
+  scrapeResult: string | null = null;
 
   constructor(private articleService: ArticleService, private predictService: PredictService) {}
 
@@ -36,6 +37,30 @@ export class ArticleHubComponent {
     }else{
       this.filteredArticles = this.articles.filter(article => article.sentiment === sentiment);
     }
+  }
+
+  onScrapeArticle(url: string) {
+    if (!url || !url.trim()) {
+      this.errorMessage = 'Please enter a valid article URL.';
+      return;
+    }
+    this.loading = true;
+    this.hasError = false;
+    this.errorMessage = null;
+    this.predictionResult = null;
+
+    this.predictService.predictInsightsFromUrl(url.trim()).subscribe({
+      next: (response) => {
+        this.predictionResult = response;
+        this.loading = false;
+      },
+      error: (err) => {
+        this.hasError = true;
+        this.errorMessage = 'Failed to generate prediction from URL.';
+        this.loading = false;
+        console.error(err);
+      }
+    });
   }
 
   onViewArticle(article: Article) {

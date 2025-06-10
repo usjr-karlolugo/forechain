@@ -2,9 +2,11 @@ import logging
 import aiohttp
 import asyncio
 import json
+import requests
 
-from fastapi import FastAPI, Request, HTTPException
+from fastapi import FastAPI, Request, HTTPException, Body
 from fastapi.middleware.cors import CORSMiddleware
+from bs4 import BeautifulSoup
 
 # Set up logging
 logging.basicConfig(
@@ -168,4 +170,93 @@ async def predict_from_alert(request: Request):
         raise http_err
     except Exception as e:
         logger.exception("Unhandled error in predict_from_alert")
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+def extract_text_from_url(url: str) -> str:
+    """Scrape and extract main text content from a news article URL."""
+    try:
+        resp = requests.get(url, timeout=10)
+        resp.raise_for_status()
+        soup = BeautifulSoup(resp.text, "html.parser")
+        # Try to extract main content heuristically
+        # You may want to improve this for your use case
+        paragraphs = soup.find_all('p')
+        text = "\n".join(p.get_text() for p in paragraphs)
+        return text.strip()
+    except Exception as e:
+        logger.error(f"Failed to scrape URL: {url} - {e}")
+        return ""
+
+
+@app.post("/predict/url/")
+async def predict_from_url(request: Request):
+    try:
+        data = await request.json()
+        url = data.get("url", "").strip()
+        if not url:
+            raise HTTPException(status_code=400, detail="No URL provided")
+
+        logger.info(f"Scraping article from URL: {url}")
+        article_text = extract_text_from_url(url)
+        if not article_text or len(article_text) < 100:
+            raise HTTPException(status_code=422, detail="Failed to extract sufficient article text from URL")
+
+        # Reuse the same prompt logic as /predict/alert/
+        truncated_text = article_text[:2000] + ("..." if len(article_text) > 2000 else "")
+
+        prompt = f"""
+        You are Forechain, an AI expert in analyzing global news to predict effects on the Philippine fashion supply chain.
+
+        INSTRUCTIONS:
+        Analyze the following news article and return a prediction in STRICT JSON format only, with no extra text, explanation, markdown, or preamble. Do NOT include "```json" or any commentary.
+
+        ARTICLE:
+        \"\"\"{truncated_text}\"\"\"
+
+        Respond using ONLY this JSON format:
+
+        {{
+            "insight": "[One-sentence summary of the predicted impact]",
+            "impact_scale": "[Low | Medium | High]",
+            "reasoning": "[Brief but logical explanation]",
+            "recommendation": {{
+                "summary": "[One clear recommendation for PH fashion supply chain stakeholders]",
+                "when": "[When to take action]",
+                "where": "[Where to seek help or which authorities or participants to involve]",
+                "why": "[Why this recommendation is crucial]",
+                "how": ["[Step 1]", "[Step 2]", "..."]
+            }}
+        }}
+        """.strip()
+
+        result = await call_chutes_api(prompt)
+
+        if isinstance(result, dict) and result.get("prediction") and isinstance(result["prediction"], str):
+            try:
+                parsed = json.loads(result["prediction"])
+                return parsed
+            except json.JSONDecodeError:
+                logger.warning("Trying to extract JSON block manually")
+                import re
+                match = re.search(r'\{.*\}', result["prediction"], re.DOTALL)
+                if match:
+                    try:
+                        return json.loads(match.group())
+                    except Exception:
+                        logger.error("Fallback JSON extraction failed")
+                raise HTTPException(
+                    status_code=502,
+                    detail="Model returned malformed JSON",
+                )
+        else:
+            raise HTTPException(
+                status_code=500,
+                detail=result.get("error", "Unknown error from prediction service")
+            )
+
+    except HTTPException as http_err:
+        raise http_err
+    except Exception as e:
+        logger.exception("Unhandled error in predict_from_url")
         raise HTTPException(status_code=500, detail=str(e))

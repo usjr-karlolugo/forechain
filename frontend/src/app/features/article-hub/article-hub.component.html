@@ -1,12 +1,15 @@
-<app-sentiment-filter (sentimentChange)="filterAccess($event)"></app-sentiment-filter>
-<div class="flex pl-10 pr-10">  
-    <div class="w-2/3 grid grid-cols-1 md:grid-cols-1 gap-4 mr-10">
-      <app-article-card
-        *ngFor="let article of filteredArticles"
-        [article]="article"
-        (viewArticle)="onViewArticle($event)"
-        (predictInsights)="onPredictInsights($event)"
-      ></app-article-card>
+<div class="flex items-center gap-4 pl-10 pr-10 mb-4">
+  <app-sentiment-filter (sentimentChange)="filterAccess($event)"></app-sentiment-filter>
+  <app-url-input (scrape)="onScrapeArticle($event)"></app-url-input>
+</div>
+<div class="flex pl-10 pr-10">
+  <div class="w-2/3 grid grid-cols-1 md:grid-cols-1 gap-4 mr-10">
+    <app-article-card
+      *ngFor="let article of filteredArticles"
+      [article]="article"
+      (viewArticle)="onViewArticle($event)"
+      (predictInsights)="onPredictInsights($event)"
+    ></app-article-card>
   </div>
   <app-predicted-insights
     [loading]="loading"

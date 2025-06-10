@@ -1,9 +1,8 @@
-<header class="bg-white text-white py-6">
+<header style="background-color: #fb923c;" class="text-white py-6">
   <div class="container mx-auto flex justify-between items-center pl-10 pr-10">
-    
     <!-- Logo Image -->
     <div class="flex items-center">
-      <img src="../../assets/logo.png" alt="FORECHAIN Logo" class="h-12 w-auto" />
+      <img src="../../assets/logov2.png" alt="FORECHAIN Logo" class="h-12 w-auto" />
     </div>
 
     <nav>
@@ -16,7 +15,7 @@
             [ngClass]="{
               'underline': activeRoute === 'articles',
               'hover:text-orange-200': true,
-              'text-orange-500': true,
+              'text-white': true,
               'font-medium': true,
               'transition': true,
               'duration-200': true
@@ -33,13 +32,30 @@
             [ngClass]="{
               'underline': activeRoute === 'statistics',
               'hover:text-orange-200': true,
-              'text-orange-500': true,
+              'text-white': true,
               'font-medium': true,
               'transition': true,
               'duration-200': true
             }"
           >
             Statistics
+          </a>
+        </li>
+        <li>
+          <a
+            href="#"
+            id="navProfile"
+            (click)="onNavigate('profile', $event)"
+            [ngClass]="{
+              'underline': activeRoute === 'profile',
+              'hover:text-orange-200': true,
+              'text-white': true,
+              'font-medium': true,
+              'transition': true,
+              'duration-200': true
+            }"
+          >
+            Profile
           </a>
         </li>
       </ul>
